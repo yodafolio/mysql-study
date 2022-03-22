@@ -1,4 +1,4 @@
-# mysql-study
+# mysql-study -- 
 
 ## 1. express.js 설치 -> npm i express --save 
 (--save를 붙여 package.json 의 "dependencies"에 해당 패키지를 설치)
