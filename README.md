@@ -43,9 +43,9 @@ app.get() 메서드는 지정된 경로에 대한 모든 유형의 HTTP 요청�
 
 ## 5. npm 으로 실행하기 위해 Script 추가하기
 
-``` Javascript
+``` JS
 "scripts": {
-    "start" : node index. js
+    "start" : node index.js
 }
 ```
 <br/>
