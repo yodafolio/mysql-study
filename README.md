@@ -65,3 +65,46 @@ npm run start
 https://carrotweb.tistory.com/107
 
 =====================
+
+
+
+## cookie-parser
+
+요청된 쿠키를 쉽게 추출할 수 있도록 해주는 미들웨어
+
+
+## cors
+CORS란 Cross Origin Resource Sharing의 약자로 도메인 및 포트가 다른 서버로 클라이언트가 요청했을 때 브라우저가 보안상의 이유로 API를 차단하는 문제 이다. 예로 들면 로컬에서 클라이언트는 3000포트로 서버는 10000 포트로 서버를 띄웠을때 또는 로컬 서버에서 다른 서버로 호출 할 때 발생하게 된다.
+---
+
+미들웨어에 cors 를 설정 하여 특정 도메인, 또는 모든 도메인 수용 처럼 설정 할 수 있다.
+``` JS
+const cors = require('cors');
+
+let corsOption = {
+    origin : ['http://localhost:3015'],
+    credentials: true,
+}
+
+app.use(cookieParser());
+```
+
+
+## nodemon
+개발시에 코드를 수정하고 서버를 껐다가 다시 켜야하는게 매우 번거롭기 때문에 코드 수정이 있으면 서버를 자동으로 restart해주는 모듈을 nodemon이라 한다.
+
+
+설치는 
+```
+npm install --save-dev nodemon
+```
+를 통해 package.json 의 'devDependencies' 에 넣어 develop 시에만 사용하도록 설정함
+
+터미널에 npm run dev (nodemon 을 통해 entry point 파일인 index.js 를 실행)
+서버를 수정, 저장 시 자동으로 재실행
+``` JSON
+//package.json
+"scripts": {
+    "dev": "nodemon index.js",
+}
+```
