@@ -22,5 +22,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Listening...(서버 실행중...)');
+    console.log('Listening...(서버 실행중...)', port);
 })
