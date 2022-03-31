@@ -1,14 +1,22 @@
-// 'use strict';
+'use strict';
 const Sequelize = require('sequelize');
+const comment = require('./comment');
+const hashtag = require('./hashtag');
+const post = require('./post');
 const user = require('./user');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 const db = {};
 
-const sequelize = new Sequelize(config.database, config.username, config.username, config);
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+db.Comment = comment;
+db.Hashtag = hashtag;
+db.Post = post;
 db.User = user;
+console.log('==========', user)
+console.log('======= db', db)
 
 Object.keys(db).forEach( modelName => {
   db[modelName].init(sequelize);
@@ -24,6 +32,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
 
 // const fs = require('fs');
 // const path = require('path');

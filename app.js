@@ -6,16 +6,20 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 
 const userRouter = require('./routes/user');
+// const { sequelize } = require('./models');
 const db = require('./models');
 
 
 dotenv.config();
 const app = express();
+
 db.sequelize.sync()
-    .then(() => {
-        console.log('db 연결 성공');
-    })
-    .catch(console.error());
+.then(() => {
+    console.log('db 연결 성공');
+})
+.catch((error) => {
+    console.log("---error", error)
+});
 
 const port = process.env.DB_PORT;
 
@@ -25,7 +29,8 @@ const corsOption = {
 }
 
 
-
+app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors(corsOption));
 // app.use(cookieParser());
 
