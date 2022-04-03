@@ -1,18 +1,42 @@
+// const passport = require('passport');
+// const local = require('./local');
+
+// module.exports = () => {
+//     passport.serializeUser((user, done) => {
+//         console.log('serializeUser ====>>', user)
+//     });
+
+//     // passport.deserializeUser(() => {
+
+//     // });
+
+//     console.log('testetestes')
+//     local();
+// }
+
+
+
+
+
 const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const crypto = require('crypto-js');
 const { User } = require('../models');
 const jwt = require("jsonwebtoken");
 
-const { User } = require('../models');
+// const { User } = require('../models');
 
 require('dotenv').config();
 
-const passportLoginVerify = async (email, userPassword, done) => {
+
+const passportConfig = { usernameField: 'userEmail', passwordField: 'userPassWord' }
+
+
+const passportLoginVerify = async (userEmail, userPassWord, done) => {
     try {
         const user = await User.findOne({
             where: {
-                userEmail: email
+                userEmail
             }
         })
         if(!user) {
@@ -20,11 +44,15 @@ const passportLoginVerify = async (email, userPassword, done) => {
             return;
         };
 
-        const compare = userPassword === user.userPassword;
+        const hashedPassword = crypto.SHA256(userPassWord, process.env.SALT).toString();
+    
+        const passwordCheck = user.userPassWord === hashedPassword; // 비밀번호 확인
 
-        if(compare) {
-            done(null, user);
-            return;
+        // const compare = userPassWord === user.userPassword;
+
+        if(passwordCheck) {
+            console.log('passwordCheck===', user);
+            return done(null, user);
         }
 
         done(null, false, { reason: '올바르지 않은 비밀번호 입니다.'});
@@ -35,3 +63,6 @@ const passportLoginVerify = async (email, userPassword, done) => {
 }
 
 
+module.exports = () => {
+    passport.use('local', new LocalStrategy(passportConfig, passportLoginVerify));
+  };

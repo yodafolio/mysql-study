@@ -5,11 +5,13 @@ const bodyParser = require('body-parser'); // restAPI를 사용할때, req.body�
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const passport = require('passport');
+const passportConfig = require('./passport');
 
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 // const { sequelize } = require('./models');
 const db = require('./models');
+// const { session } = require('passport');
 
 dotenv.config();
 
@@ -22,6 +24,7 @@ db.sequelize.sync()
 .catch((error) => {
     console.log("---error", error)
 });
+
 
 // ================ db 연결 성공 하면 아래 코드 진행
 
@@ -38,6 +41,10 @@ app.use(express.json());
 app.use(cors(corsOption));
 app.use(cookieParser());
 
+
+app.use(passport.initialize());
+passportConfig();
+// app.use(passport.session());
 
 // ================ route 연결
 
