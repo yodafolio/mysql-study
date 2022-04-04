@@ -32,7 +32,7 @@ const port = process.env.DB_PORT;
 
 const corsOption = {
     origin : ['http://localhost:8010'],
-    credentials: true,
+    credentials: true, // 쿠키를 전달 하고 싶을때 true
 }
 
 

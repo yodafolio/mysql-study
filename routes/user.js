@@ -32,7 +32,6 @@ router.post('/login', async (req, res, next) => {
     console.log('login ====');
     try {
         passport.authenticate('local', (passportError, user, info) => {
-            console.log('login ==== 2');
             // done(null, false, {reason:...}) 으로 넘어온 콜백 함수가 이곳에서의 (passportError, user, info) => {...}
             if(passportError) { // 그렇다는건 err은 서버에러를 의미 한다.
                 console.log('SERVER ERR =>', passportError);
@@ -42,11 +41,9 @@ router.post('/login', async (req, res, next) => {
                 console.log('SERVER ERR =>', passportError);
                 return res.status(401).send(info.reason); //상태코드 401은 "허가되지 않음" 을 의미
             }
-            console.log('login ==== 3', req.login);
-            console.log('login ==== 3-3', user);
             return req.login(user, { session: false }, async (loginErr) => { //login은 passport에 있는 함수
                 try {
-                    console.log('login ==== 4', loginErr);
+                    // console.log('login ==== 4', loginErr);
                     // 우리 서비스의 로직을 다 통과 하면 패스포트의 로그인을 로직을 타게 되는데
                     if(loginErr) { //그 과정에서 혹시나 로그인 에러가 난다면 해주는 에러 처리
                         console.error(loginErr);
