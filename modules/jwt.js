@@ -20,8 +20,6 @@ module.exports = {
         return result;
     },
     verify: async (token) => {
-        console.log('==========token', token);
-        
         let decoded;
         try {
             // verify를 통해 값 decode!

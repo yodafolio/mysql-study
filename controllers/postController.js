@@ -9,7 +9,7 @@ module.exports.createPost = async(req, res, next) => {
         if(!content.length) return res.status(400).send('content가 비어 있습니다.');
 
         const decode = await verify(req.headers.authorization);
-        
+
         if(decode === -2) return res.status(400).send('유효하지 않은 토큰 입니다.');
         if(decode === -3) return res.status(400).send('로그인 인증이 만료 되었습니다.');
 
@@ -34,18 +34,26 @@ module.exports.createPost = async(req, res, next) => {
 
 module.exports.loadPostList = async(req, res, next) => {
     try {
-        const { content } = req.body;
-        
+        const decode = await verify(req.headers.authorization);
+
+        if(decode === -2) return res.status(400).send('유효하지 않은 토큰 입니다.');
+        if(decode === -3) return res.status(400).send('로그인 인증이 만료 되었습니다.');
+
+        const dbUser = await User.findOne({
+            where: {
+                userEmail: decode.email
+            }
+        })
+
+        if(dbUser.id !== decode.id) return res.status(400).send('사용자가 일치 하지 않습니다.');
+
         const posts = await Post.findAll({
-            attributes: ['content', 'createdAt', 'updatedAt']
+            attributes: ['content', 'createdAt']
+            // attributes: ['content', 'createdAt', 'updatedAt']
         });
-        // const posts = await Post.findAll({
-        //     attributes: {
-        //         exclude: ['updatedAt'] // 테이블에서 updatedAt만 빼고 가져오겠다.
-        //     }
-        // });
 
         if(!posts) return res.status(400).send('content가 비어 있습니다.');
+
 
         res.status(200).send(posts);
     } catch (err) {

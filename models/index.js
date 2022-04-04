@@ -15,8 +15,8 @@ db.Comment = comment;
 db.Hashtag = hashtag;
 db.Post = post;
 db.User = user;
-console.log('==========', user)
-console.log('======= db', db)
+// console.log('==========', user)
+// console.log('======= db', db)
 
 Object.keys(db).forEach( modelName => {
   db[modelName].init(sequelize);
