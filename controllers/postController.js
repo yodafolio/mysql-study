@@ -4,7 +4,7 @@ const { verify } = require('../modules/jwt');
 
 module.exports.createPost = async(req, res, next) => {
     try {
-        const { content } = req.body;
+        const { title, content } = req.body;
 
         if(!content.length) return res.status(400).send('content가 비어 있습니다.');
 
@@ -20,7 +20,11 @@ module.exports.createPost = async(req, res, next) => {
         })
         
         if(dbUser.id === decode.id && dbUser.userEmail === decode.email) {
-            const createPost = await Post.create({ content });
+            const createPost = await Post.create({
+                title,
+                content,
+                userId: dbUser.id
+            });
 
             return res.status(200).send(createPost.dataValues);
         }

@@ -4,6 +4,7 @@ const { Model } = DataTypes;
 module.exports = class Post extends Model {
   static init(sequelize) {
     return super.init({
+      title: DataTypes.STRING,
       content: DataTypes.TEXT,
     }, {
       sequelize,
