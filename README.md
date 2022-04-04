@@ -74,7 +74,9 @@ https://carrotweb.tistory.com/107
 
 
 ## cors
+
 CORS란 Cross Origin Resource Sharing의 약자로 도메인 및 포트가 다른 서버로 클라이언트가 요청했을 때 브라우저가 보안상의 이유로 API를 차단하는 문제 이다. 예로 들면 로컬에서 클라이언트는 3000포트로 서버는 10000 포트로 서버를 띄웠을때 또는 로컬 서버에서 다른 서버로 호출 할 때 발생하게 된다.
+
 ---
 
 미들웨어에 cors 를 설정 하여 특정 도메인, 또는 모든 도메인 수용 처럼 설정 할 수 있다.
@@ -107,4 +109,4 @@ npm install --save-dev nodemon
 "scripts": {
     "dev": "nodemon index.js",
 }
-```c
+```
