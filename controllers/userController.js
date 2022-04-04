@@ -35,8 +35,9 @@ module.exports.loginUser = async (req, res, next) => {
                 return next(passportError);
             }
             if(info) { //info 가 있다는건 클라이언트 에러
-                console.log('SERVER ERR =>', passportError);
-                return res.status(401).send(info.reason); //상태코드 401은 "허가되지 않음" 을 의미
+                console.log('클라이언트 에러', info);
+                return res.status(401).send(info.message); //상태코드 401은 "허가되지 않음" 을 의미
+                // return res.status(401).send(info.reason); //상태코드 401은 "허가되지 않음" 을 의미
             }
             return req.login(user, { session: false }, async (loginErr) => { //login은 passport에 있는 함수
                 try {

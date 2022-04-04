@@ -20,12 +20,12 @@ dotenv.config();
 const app = express();
 
 db.sequelize.sync()
-.then(() => {
-    console.log('db 연결 성공');
-})
-.catch((error) => {
-    console.log("---error", error)
-});
+    .then(() => {
+        console.log('db 연결 성공');
+    })
+    .catch((error) => {
+        console.log("---error", error)
+    });
 
 
 // ================ db 연결 성공 하면 아래 코드 진행

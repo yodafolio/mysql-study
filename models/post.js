@@ -4,7 +4,7 @@ const { Model } = DataTypes;
 module.exports = class Post extends Model {
   static init(sequelize) {
     return super.init({
-      content: DataTypes.TEXT
+      content: DataTypes.TEXT,
     }, {
       sequelize,
       modelName: 'Post',
@@ -12,7 +12,7 @@ module.exports = class Post extends Model {
   }
   static associate(db) {
     db.Post.hasMany(db.Comment);
-    db.Post.belongsTo(db.User);
+    db.Post.belongsTo(db.User, { foreignKey:'userId' });
     db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
   }
 }

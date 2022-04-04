@@ -4,18 +4,21 @@ const { verify } = require('../modules/jwt');
 
 module.exports.createPost = async(req, res, next) => {
     try {
-        const decode = await verify(req.headers.authorization);
-
         const { content } = req.body;
 
         if(!content.length) return res.status(400).send('content가 비어 있습니다.');
+
+        const decode = await verify(req.headers.authorization);
+        
+        if(decode === -2) return res.status(400).send('유효하지 않은 토큰 입니다.');
+        if(decode === -3) return res.status(400).send('로그인 인증이 만료 되었습니다.');
 
         const dbUser = await User.findOne({
             where: {
                 userEmail: decode.email
             }
         })
-
+        
         if(dbUser.id === decode.id && dbUser.userEmail === decode.email) {
             const createPost = await Post.create({ content });
 
