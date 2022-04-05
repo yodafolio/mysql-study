@@ -16,7 +16,8 @@ module.exports.createPost = async(req, res, next) => {
         const dbUser = await User.findOne({
             where: {
                 userEmail: decode.email
-            }
+            },
+            raw: true
         })
         
         if(dbUser.id === decode.id && dbUser.userEmail === decode.email) {
@@ -26,7 +27,7 @@ module.exports.createPost = async(req, res, next) => {
                 userId: dbUser.id
             });
 
-            return res.status(200).send(createPost.dataValues);
+            return res.status(200).send(createPost);
         }
         
         res.status(400).send('사용자가 일치하지 않습니다.');
