@@ -28,6 +28,7 @@ module.exports.createUser = async (req, res, next) => { // POST /user/
 module.exports.loginUser = async (req, res, next) => {
     console.log('login ====');
     try {
+        console.log('body', req.body)
         passport.authenticate('local', (passportError, user, info) => {
             // done(null, false, {reason:...}) 으로 넘어온 콜백 함수가 이곳에서의 (passportError, user, info) => {...}
             if(passportError) { // 그렇다는건 err은 서버에러를 의미 한다.

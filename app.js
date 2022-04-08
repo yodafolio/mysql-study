@@ -33,7 +33,7 @@ db.sequelize.sync()
 const port = process.env.DB_PORT;
 
 const corsOption = {
-    origin : ['http://localhost:8010'],
+    origin : ['http://localhost:8010', 'http://localhost:3000'],
     credentials: true, // 쿠키를 전달 하고 싶을때 true
 }
 
