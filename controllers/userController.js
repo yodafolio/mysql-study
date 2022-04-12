@@ -26,7 +26,6 @@ module.exports.createUser = async (req, res, next) => { // POST /user/
 };
 
 module.exports.loginUser = async (req, res, next) => {
-    console.log('login ====');
     try {
         console.log('body', req.body)
         passport.authenticate('local', (passportError, user, info) => {
@@ -52,15 +51,37 @@ module.exports.loginUser = async (req, res, next) => {
                     console.log('LOGINuser =>', user.dataValues);
                     const token = await jwt.sign(user.dataValues);
                     console.log('token=> ', token);
-        
-                    return res.status(200).json(token);
+                    const accessToken = token.token;
+                    const refreshToken = token.accessToken;
+
+                    return res.status(200).cookie('accToken', accessToken, {
+                        sameSite: "none", // secure: none와 sameSite: none 은 하나의 세트 처럼 사용한다.
+                        secure: true, // https에서 사용 할수 있게 하려면 true
+                        httpOnly: true,
+                    }).send({
+                        data: token,
+                        message: "로그인 성공"
+                    });
+                    // return res.status(200).json(token);
                     // passport 로그인을 할때 passport 로그인을 저장을 해줘야 하는데 이때 session이라는게 쓰인다.
-                } catch (error) {
-                    
+                } catch (err) {
+                    console.error(err);
+                    next(err); //status 500
                 }
             });
         })(req, res, next);
-    } catch (error) {
-        
+    } catch (err) {
+        console.error(err);
+        next(err); //status 500
     }
 };
+
+module.exports.userInfo = async (req, res, next) => {
+    try {
+        console.log('req.headers => ', req.headers.authorization);
+        return res.status(200).send('접속');
+    } catch (err) {
+        console.error(err);
+        next(err); //status 500
+    }
+}
