@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const passport = require('passport');
 const passportConfig = require('./passport');
+const { swaggerUi, specs } = require("./swagger");
+
 
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
@@ -42,6 +44,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(cookieParser());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 
 app.use(passport.initialize());

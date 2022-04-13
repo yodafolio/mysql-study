@@ -1,0 +1,20 @@
+definitions:
+  # 유저
+  userSignUp:
+    type: "Object"
+    properties:
+      email:
+        type: "String"
+        example: "소셜 이메일"
+      name:
+        type: "String"
+        example: "유저 이름"
+      pushToken:
+        type: "String"
+        example: "푸쉬 토큰"
+      os:
+        type: "String"
+        example: "운영체제"
+      authType:
+        type: "Number"
+        example: "0 = 카카오, 1 = 네이버"

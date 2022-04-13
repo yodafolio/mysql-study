@@ -2,6 +2,26 @@ const { Post, User } = require('../models');
 const { verify } = require('../modules/jwt');
 
 
+/**
+ * @swagger
+ *  /user:
+ *    post:
+ *      tags:
+ *      - user
+ *      summary: 유저 회원가입
+ *      description: 유저 회원가입
+ *      consumes:
+ *      - application/json
+ *      produces:
+ *      - application/json
+ *      parameters:
+ *        - in: body
+ *          name: Body
+ *          required: true
+ *          description :
+ *          schema:
+ *              $ref: "#/definitions/userSignUp"
+ */
 module.exports.createPost = async(req, res, next) => {
     try {
         const { title, content } = req.body;
@@ -37,6 +57,29 @@ module.exports.createPost = async(req, res, next) => {
     }
 }
 
+
+/**
+ * @swagger
+ *  /post:
+ *    get:
+ *      tags:
+ *      - post
+ *      summary: 유저 상세정보 --
+ *      description: 유저 상세정보
+ *      consumes:
+ *      - application/json
+ *      produces:
+ *      - application/json
+ *      parameters:
+ *        - in: header
+ *          name: authorization
+ *          required: true
+ *          description : Bearer AccessToken
+ *        - in: query
+ *          name: userId
+ *          required: true
+ *          description : 유저 id
+ */
 module.exports.loadPostList = async(req, res, next) => {
     try {
         const decode = await verify(req.headers.authorization);
