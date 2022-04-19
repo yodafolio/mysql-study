@@ -39,7 +39,7 @@ const corsOption = {
     credentials: true, // 쿠키를 전달 하고 싶을때 true
 }
 
-
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors(corsOption));
@@ -57,7 +57,6 @@ passportConfig();
 app.get('/', (req, res) => {
     console.log('Cookies: ', req.cookies);
     res.send('Hello Node.js');
-
 });
 // ======
 
